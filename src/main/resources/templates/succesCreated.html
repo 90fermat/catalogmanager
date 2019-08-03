@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="index or home">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>Catalog Manager</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+
+<div class="jumbotron">
+    <!--Usage of models we wrote in WepAppController th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username} -->
+    <h3> Here you can add Product to the Catalog</h3>
+    <p> </p>
+
+</div>
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Succesfull created Product done!</h4>
+    <p th:text="${product.toString()}"></p>
+</div>
+<form action="#" th:action="@{/products/create}" th:object="${product}"  method="post">
+    <fieldset>
+        <legend>Create Product</legend>
+        <div class="card">
+            <p>
+
+                <label for="pcode">Code</label>
+                <input type="text" id="pcode" required placeholder="code" th:field="*{code}"/>
+                <div class="alert" th:if="${#fields.hasErrors('code')}" th:errors="*{code}">
+            <p>  code error : </p>
+        </div>
+        </p>
+
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+        <p>  name error : </p>
+        </div>
+        <label for="pname">Name</label>
+        <input type="text" id="pname" required placeholder="name" th:field="*{name}"/>
+        </p>
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}">
+        <p>  supplier Name error : </p>
+        </div>
+        <label for="supplierName">Supplier name</label>
+        <input type="text" id="supplierName" placeholder="supplier name" th:field= "*{supplierName}"/>
+        </p>
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}">
+        <p>  buying Price error : </p>
+        </div>
+        <label for="supplierUrl">Buying Price</label>
+        <input type="text" id="buyingPrice" placeholder="buying price" th:field="*{buyingPrice}"/>
+        </p>
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('supplierUrl')}" th:errors="*{supplierUrl}">
+        <p>  supplier Url error : </p>
+        </div>
+        <label for="supplierUrl">Supplier Url</label>
+        <input type="url" id="supplierUrl" placeholder="supplier Url" th:field="*{supplierUrl}"/>
+        </p>
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}">
+        <p>  selling Price error : </p>
+        </div>
+        <label for="sellingPrice">Selling Price</label>
+        <input type="text" id="sellingPrice" placeholder="selling Price" th:field = "*{sellingPrice}"/>
+        </p>
+        <p>
+            <div class="alert" th:if="${#fields.hasErrors('image')}" th:errors="*{image}">
+        <p>  image error : </p>
+        </div>
+        <label for="image">Image</label> <br>
+        <input type="file" id="image" required th:field = "*{image}">
+        </p>
+        </div>
+
+
+         <input class="btn btn-lg btn-success" type="submit" id="submitButton" th:value="Save">
+         <input class="btn  btn-lg btn-danger" type="reset" id="resetButton" name="reset" th:value="Reset"/>
+    </fieldset>
+</form>
+<div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

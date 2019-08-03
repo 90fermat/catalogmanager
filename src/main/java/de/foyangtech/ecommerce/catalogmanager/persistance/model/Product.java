@@ -1,6 +1,7 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,8 +10,10 @@ import java.io.File;
 import java.util.Date;
 
 @Entity
+@Component
 @Table(name ="products")
 public class Product {
+
 
 
     @Id
@@ -62,6 +65,10 @@ public class Product {
         this.supplierName = supplierName;
         this.supplierUrl = supplierUrl;
         this.image = image;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

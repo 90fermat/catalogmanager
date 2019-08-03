@@ -2,7 +2,7 @@ package de.foyangtech.ecommerce.catalogmanager.error.exception;
 
 public class ProductIdMismatchException extends RuntimeException {
 
-    public ProductIdMismatchException(String message, Throwable cause) {
+    private ProductIdMismatchException (String message, Throwable cause)  {
 
         super(message, cause);
     }
