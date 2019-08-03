@@ -6,6 +6,7 @@ import de.foyangtech.ecommerce.catalogmanager.persistance.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +20,16 @@ public class UserController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @PostMapping(produces = "application/json")
     public ResponseEntity<User> addDefaultUser() {
         User user = new User();
         user.setFirstName("Vanessa");
         user.setLastName("Ngueneko");
         user.setUsername("vngueneko");
-        user.setPassword("abcdef");
+        user.setPassword(passwordEncoder.encode("abcdef"));
         user.setRole("ROLE_ADMIN");
 
         User savedUser = userDao.save(user);

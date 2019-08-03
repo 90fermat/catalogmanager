@@ -18,8 +18,8 @@ public class User {
     @Column(unique=true)
     private String username;
     private String password;
-
     private String role;
+    private boolean active;
 
     public User() {}
 
@@ -34,6 +34,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.active = true;
     }
 
     public int getId() {
@@ -82,5 +83,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
