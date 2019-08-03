@@ -1,4 +1,4 @@
-package com.ecommerce.catalogmanager.error.exception;
+package de.foyangtech.ecommerce.catalogmanager.error.exception;
 
 public class ProductIdMismatchException extends RuntimeException {
 

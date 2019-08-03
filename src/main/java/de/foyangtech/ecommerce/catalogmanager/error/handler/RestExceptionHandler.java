@@ -1,8 +1,7 @@
-package com.ecommerce.catalogmanager.error.handler;
+package de.foyangtech.ecommerce.catalogmanager.error.handler;
 
-import com.ecommerce.catalogmanager.error.exception.ProductIdMismatchException;
-import com.ecommerce.catalogmanager.error.exception.ProductNotFoundException;
-import com.ecommerce.catalogmanager.persistance.model.Product;
+import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductIdMismatchException;
+import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.ecommerce.catalogmanager.error.exception;
+package de.foyangtech.ecommerce.catalogmanager.error.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
