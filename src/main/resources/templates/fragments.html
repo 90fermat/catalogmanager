@@ -4,7 +4,7 @@
 
 <!-- Fragment #1 : Header files contains css and js references -->
 <head th:fragment="headerfiles">
-    <title>Introduction to SpringBoot Security</title>
+    <title>Catalog Manager</title>
     <meta charset="UTF-8"/>
     <link th:href="@{~/css/bootstrap.css}" rel="stylesheet">
     <link th:href="@{/webjars/font-awesome/5.9.0/css/all.css}" rel="stylesheet">
@@ -14,7 +14,7 @@
 <!-- Fragment #2 : Navbar contains nav links -->
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Boot Security</a>
+        <a class="navbar-brand" href="#" th:href="@{~/index}">Catalog Manager</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -22,14 +22,12 @@
                     <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-home"></i>Home</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/profile/index}">Profile</a>
+                    <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-list"></i>Product List</a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/admin/index}">Admin</a>
+                    <a class="nav-link" href="#" th:href="@{/products/create}">Create Product</a>
                 </li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/management/index}">Management</a>
-                </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
                 <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>
