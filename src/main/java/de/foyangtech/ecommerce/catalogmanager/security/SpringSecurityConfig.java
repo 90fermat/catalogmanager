@@ -9,10 +9,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +29,22 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-               // .antMatchers("/index.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-               // .formLogin()
-               // .loginPage("/login").permitAll()
+                .formLogin().permitAll()
+                .loginPage("/login")
                 .and()
-                .csrf().disable();
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll()
+                //.deleteCookies("JSESSIONID")
+                .and()
+                .rememberMe().tokenValiditySeconds(86400).key("mySecret")
+                .and()
+                .csrf().disable()
+                .sessionManagement().maximumSessions(3).sessionRegistry(sessionRegistry());
     }
 
     @Autowired
@@ -52,4 +63,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
 
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
 }
