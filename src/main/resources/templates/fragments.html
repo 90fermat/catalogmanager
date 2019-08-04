@@ -6,7 +6,7 @@
 <head th:fragment="headerfiles">
     <title>Catalog Manager</title>
     <meta charset="UTF-8"/>
-    <link th:href="@{~/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" rel="stylesheet">
     <link th:href="@{/webjars/font-awesome/5.9.0/css/all.css}" rel="stylesheet">
 </head>
 <body>
@@ -31,7 +31,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
                 <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>
-                <button sec:authorize="isAnonymous()" th:href="@{~/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>
+                <!--<button sec:authorize="isAnonymous()" th:href="@{~/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>-->
             </form>
         </div>
     </nav>
