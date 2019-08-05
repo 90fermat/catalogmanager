@@ -1,27 +1,32 @@
 package de.foyangtech.ecommerce.catalogmanager.controller;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductIdMismatchException;
 import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductNotFoundException;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ProductDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.hibernate.type.BlobType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.net.URI;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import static java.sql.Types.BLOB;
 
 @Controller
 @RequestMapping("products")
@@ -34,11 +39,13 @@ public class ProductController {
     private Product product;
 
 
-    /**
+
+
+/*    *//**
      * return all products
-     */
+     *//*
     @GetMapping
-    public MappingJacksonValue listProducts() {
+    public String listProducts(Model model) {
         Iterable<Product> products = productDao.findAll();
 
         SimpleBeanPropertyFilter myFilter = SimpleBeanPropertyFilter.serializeAllExcept("buyingPrice");
@@ -49,7 +56,17 @@ public class ProductController {
 
         productsFilters.setFilters(listOfFilters);
 
-        return productsFilters;
+        model.addAttribute("products", productsFilters);
+
+        return "listProducts";
+    }*/
+
+    @GetMapping
+    public String allProducts(Model model) {
+        List<Product> products = productDao.findAll();
+        model.addAttribute("products", products);
+
+        return "listProducts";
     }
 
     /**
@@ -57,7 +74,7 @@ public class ProductController {
      * @param name of the product
      * @return  the product
      */
-    @GetMapping("/{name}")
+    @GetMapping("name/{name}")
     public Product findByName(@PathVariable String name) {
         return productDao.findByName(name);
     }
@@ -67,7 +84,7 @@ public class ProductController {
      * @param id of the product
      * @return the product
      */
-    @GetMapping("/{id}")
+    @GetMapping("ids/{id}")
     public Product findById(@PathVariable  Long id) {
         return productDao.findById(id)
                 .orElseThrow(ProductNotFoundException::new);
@@ -94,30 +111,46 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
+    public String create(@Valid @ModelAttribute Product product,
+                         BindingResult bindingResult, Model model) {
+
 
         product.setTimestamp(new Date());
 
+        product.setImageName(product.getMultipartFile().getOriginalFilename());
+
+        try {
+             product.setPhoto(product.getMultipartFile().getBytes());
+        } catch (IOException io){
+            System.out.println("Error append by trying to transfer MultipartFile and " +
+                    io.getMessage());
+        }
+
+
+
+
         if (bindingResult.hasErrors()) {
-            return "/createProduct";
+            return "createProduct";
         }
         Product productAdded = productDao.save(product);
         if (productAdded == null) {
-            return "/createProduct";
+            return "createProduct";
         }
          model.addAttribute("productAdded", product);
-        return "/succesCreated";
+         model.addAttribute("created", true);
+
+        return "createProduct";
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("ids/{id}")
     public void delete(@PathVariable Long id) {
        productDao.findById(id)
                 .orElseThrow(ProductNotFoundException::new);
         productDao.deleteById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("ids/{id}")
     public Product updateBook(@RequestBody Product product, @PathVariable Long id) {
         if (product.getId() != id) {
             throw new ProductIdMismatchException();
@@ -127,12 +160,12 @@ public class ProductController {
         return productDao.save(product);
     }
 
-    @GetMapping("/{nameLike}")
+    @GetMapping("name/{nameLike}")
     public List<Product> requestName(@PathVariable String nameLike) {
         return productDao.findByNameLike("%" + nameLike + "%");
     }
 
-    @GetMapping("/{limitPrice}")
+    @GetMapping("price/{limitPrice}")
     public List<Product> limitPrice(@PathVariable int limitPrice) {
         return productDao.findByBuyingPriceGreaterThan(limitPrice);
     }
@@ -140,8 +173,24 @@ public class ProductController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
 
+
         model.addAttribute("product", product);
         model.addAttribute("created", false);
         return "createProduct";
     }
+
+    @GetMapping("/imageDisplay")
+    public void showImages(@RequestParam("id") Integer id, HttpServletResponse response, HttpServletRequest request)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        //byte[] bytes = Base64.decodeBase64(productDao.findPhotoById(id));
+
+       // byte[] bytes = ph.getBytes(1, (int) ph.);
+      //  InputStream inputStream = new ByteArrayInputStream(bytes);
+       // IOUtils.copy(inputStream, response.getOutputStream());
+
+        response.getOutputStream().write(productDao.findPhotoById(id));
+        response.getOutputStream().close();
+    }
+
 }

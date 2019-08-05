@@ -1,11 +1,16 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.dao;
 
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
+import org.hibernate.type.BlobType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.Date;
 import java.util.List;
+import static java.sql.Types.BLOB;
 
 @Repository
 public interface ProductDao extends JpaRepository<Product, Long> {
@@ -18,4 +23,8 @@ public interface ProductDao extends JpaRepository<Product, Long> {
     List<Product> findByNameLike(String search);
 
     List<Product> findProductsByTimestampIsGreaterThanEqual(Date date);
+
+    @Query(value = "SELECT photo FROM Products p WHERE p.id = :id", nativeQuery = true )
+    byte[] findPhotoById(@Param("id") Integer id);
+
 }

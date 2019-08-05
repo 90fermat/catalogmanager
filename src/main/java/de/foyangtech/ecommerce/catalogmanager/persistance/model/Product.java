@@ -1,13 +1,16 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.util.Date;
+
+
 
 @Entity
 @Component
@@ -39,13 +42,27 @@ public class Product {
     @Length(min = 10, max = 200)
     private String supplierUrl;
 
-    @NotNull
-    private File image;
+
+    private String imageName;
+
+
+    @Lob
+    @Column(name = "photo")
+    @Type(type="org.hibernate.type.BinaryType")
+    private byte[] photo;
 
     @Basic(optional = false)
     @Column(name="timestamp", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
+
+    private String category;
+
+    @NotNull
+    @Transient
+    private MultipartFile multipartFile;
+
+
 
     public Product() {
     }
@@ -56,7 +73,8 @@ public class Product {
                    @Min(1) double buyingPrice,
                    @Length(min = 3, max = 20) String supplierName,
                    @Length(min = 10, max = 200) String supplierUrl,
-                   @NotNull File image)
+                   @NotNull String imageName, String category,
+                   byte[] photo)
     {
         this.name = name;
         this.code = code;
@@ -64,7 +82,9 @@ public class Product {
         this.buyingPrice = buyingPrice;
         this.supplierName = supplierName;
         this.supplierUrl = supplierUrl;
-        this.image = image;
+        this.imageName = imageName;
+        this.category = category;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -119,12 +139,12 @@ public class Product {
         this.supplierUrl = supplierUrl;
     }
 
-    public File getImage() {
-        return image;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImage(File image) {
-        this.image = image;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Date getTimestamp() {
@@ -135,17 +155,42 @@ public class Product {
         this.timestamp = timestamp;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public MultipartFile getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", sellingPrice=" + sellingPrice +
-                ", buyingPrice=" + buyingPrice +
-                ", supplierName='" + supplierName + '\'' +
-                ", supplierUrl='" + supplierUrl + '\'' +
-                ", image=" + image +
+                ", selling Price=" + sellingPrice +
+                ", buying Price=" + buyingPrice +
+                ", supplier Name='" + supplierName + '\'' +
+                ", supplier Url='" + supplierUrl + '\'' +
+                ", image Name=" + imageName +
+                ", category='" + category + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

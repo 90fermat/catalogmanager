@@ -1,6 +1,8 @@
 package de.foyangtech.ecommerce.catalogmanager.service;
 
+import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ProductDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.UserDao;
+import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,11 +16,14 @@ public class DBinit implements CommandLineRunner {
 
     private UserDao userDao;
 
+    private ProductDao productDao;
+
     private PasswordEncoder passwordEncoder;
 
-    public DBinit(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public DBinit(UserDao userDao, PasswordEncoder passwordEncoder, ProductDao productDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.productDao = productDao;
     }
 
     @Override
@@ -49,6 +54,10 @@ public class DBinit implements CommandLineRunner {
 
         //Save to database
         userDao.saveAll(users);
+
+        //Create some products
+
+
 
     }
 }

@@ -1,11 +1,13 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name ="files")
+@Component
+@Table(name ="images")
 public class ProductImage {
 
     @Id
@@ -16,6 +18,7 @@ public class ProductImage {
     private String fileName;
 
     private String fileType;
+
 
     @Lob
     private byte[] data;

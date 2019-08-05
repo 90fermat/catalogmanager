@@ -63,9 +63,10 @@
                     <p  class="form-group">
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}">
 
-                    </div>
-                    <label for="image">Image</label> <br>
-                    <input type="file" id="image" required th:field = "*{image}">
+                </div>
+                    <label >Image</label>
+                    <img  th:src="*{{multipartFile}}" alt="..." class="img-thumbnail"><br>
+                    <input type="file" name="file" required th:field = "*{multipartFile}">
                     </p>
                 </div>
 
