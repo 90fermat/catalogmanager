@@ -12,6 +12,10 @@
         <p> </p>
 
     </div>
+    <div th:if="${badError}" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Internal Error!</h4>
+        <p>Some error append ..Please try again</p>
+    </div>
     <div th:if="${created}" class="alert alert-success" role="alert">
         <h4 class="alert-heading">Succesfull created Product done!</h4>
         <p th:text="${product.toString()}"></p>

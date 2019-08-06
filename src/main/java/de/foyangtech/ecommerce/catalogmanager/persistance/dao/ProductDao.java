@@ -24,7 +24,9 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByTimestampIsGreaterThanEqual(Date date);
 
-    @Query(value = "SELECT photo FROM Products p WHERE p.id = :id", nativeQuery = true )
-    byte[] findPhotoById(@Param("id") Integer id);
+    @Query(value = "SELECT image_id FROM Products p WHERE p.id = :id", nativeQuery = true )
+    String findPhotoById(@Param("id") Integer id);
+
+
 
 }

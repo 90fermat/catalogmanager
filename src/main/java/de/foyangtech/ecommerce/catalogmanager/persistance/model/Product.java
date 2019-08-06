@@ -21,7 +21,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotNull
     @Length(min = 3, max = 20)
@@ -42,14 +42,9 @@ public class Product {
     @Length(min = 10, max = 200)
     private String supplierUrl;
 
-
-    private String imageName;
-
-
-    @Lob
-    @Column(name = "photo")
-    @Type(type="org.hibernate.type.BinaryType")
-    private byte[] photo;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(unique = true, referencedColumnName = "id")
+    private ProductImage image;
 
     @Basic(optional = false)
     @Column(name="timestamp", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -73,8 +68,7 @@ public class Product {
                    @Min(1) double buyingPrice,
                    @Length(min = 3, max = 20) String supplierName,
                    @Length(min = 10, max = 200) String supplierUrl,
-                   @NotNull String imageName, String category,
-                   byte[] photo)
+                    String category, ProductImage image)
     {
         this.name = name;
         this.code = code;
@@ -82,12 +76,12 @@ public class Product {
         this.buyingPrice = buyingPrice;
         this.supplierName = supplierName;
         this.supplierUrl = supplierUrl;
-        this.imageName = imageName;
         this.category = category;
-        this.photo = photo;
+        this.image  = image;
+        this.image.setProduct(this);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -139,14 +133,6 @@ public class Product {
         this.supplierUrl = supplierUrl;
     }
 
-    public String getImageName() {
-        return imageName;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }
@@ -171,17 +157,18 @@ public class Product {
         this.multipartFile = multipartFile;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public ProductImage getImage() {
+        return image;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setImage(ProductImage image) {
+        this.image = image;
     }
+
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Product { " +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
@@ -189,7 +176,7 @@ public class Product {
                 ", buying Price=" + buyingPrice +
                 ", supplier Name='" + supplierName + '\'' +
                 ", supplier Url='" + supplierUrl + '\'' +
-                ", image Name=" + imageName +
+                ", image Name=" + image.getFileName() +
                 ", category='" + category + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
