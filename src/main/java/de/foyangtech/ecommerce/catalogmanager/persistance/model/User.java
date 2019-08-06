@@ -1,7 +1,6 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 
 @Entity
@@ -12,8 +11,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
 
     @Column(unique=true)
     private String username;
@@ -23,14 +22,14 @@ public class User {
 
     public User() {}
 
-    public User(String firstName,
-                String lastName,
+    public User(String firstname,
+                String lastname,
                 String username,
                 String password,
                 String role )
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -45,20 +44,20 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getUsername() {

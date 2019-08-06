@@ -13,4 +13,7 @@ public class HomeController {
 
     @GetMapping("login")
     public String login() {return "login";}
+
+    @GetMapping("logout_msg")
+    public String logout() {return "logout_msg";}
 }

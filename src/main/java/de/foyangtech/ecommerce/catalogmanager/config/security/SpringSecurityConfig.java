@@ -1,4 +1,4 @@
-package de.foyangtech.ecommerce.catalogmanager.security;
+package de.foyangtech.ecommerce.catalogmanager.config.security;
 
 import de.foyangtech.ecommerce.catalogmanager.service.UserPrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -36,9 +34,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().permitAll()
                 .loginPage("/login")
+               // .defaultSuccessUrl("/index")
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/logout_msg").permitAll()
                 //.deleteCookies("JSESSIONID")
                 .and()
                 .rememberMe().tokenValiditySeconds(86400).key("mySecret")

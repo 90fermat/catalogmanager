@@ -26,8 +26,8 @@ public class UserController {
     @PostMapping(produces = "application/json")
     public ResponseEntity<User> addDefaultUser() {
         User user = new User();
-        user.setFirstName("Vanessa");
-        user.setLastName("Ngueneko");
+        user.setFirstname("Vanessa");
+        user.setLastname("Ngueneko");
         user.setUsername("vngueneko");
         user.setPassword(passwordEncoder.encode("abcdef"));
         user.setRole("ROLE_ADMIN");
@@ -41,6 +41,11 @@ public class UserController {
 
         User userByUsername = userDao.findUserByUsername(username);
         return new ResponseEntity<>(userByUsername, HttpStatus.OK);
+    }
+
+    @GetMapping("/create_user")
+    public String showCreateForm() {
+        return "create_user";
     }
 
 }
