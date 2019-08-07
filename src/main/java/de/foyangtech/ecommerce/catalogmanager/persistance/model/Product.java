@@ -2,6 +2,7 @@ package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,8 +18,6 @@ import java.util.Date;
 @Table(name ="products")
 public class Product {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,9 +26,14 @@ public class Product {
     @Length(min = 3, max = 20)
     private String name;
 
+
     @NotNull
     @Length(min = 3, max = 20)
+    @Column(unique = true)
     private String code;
+
+//    @EmbeddedId
+//    private ProductId productId;
 
     @Min(1)
     private double sellingPrice;
@@ -60,6 +64,7 @@ public class Product {
 
 
     public Product() {
+       // setProductId(new ProductId());
     }
 
     public Product(@NotNull @Length(min = 3, max = 20) String name,
@@ -164,6 +169,14 @@ public class Product {
     public void setImage(ProductImage image) {
         this.image = image;
     }
+//
+//    public ProductId getProductId() {
+//        return productId;
+//    }
+//
+//    public void setProductId(ProductId productId) {
+//        this.productId = productId;
+//    }
 
 
     @Override

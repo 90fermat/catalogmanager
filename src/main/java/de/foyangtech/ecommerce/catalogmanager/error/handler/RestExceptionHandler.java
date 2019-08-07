@@ -26,10 +26,14 @@ public class RestExceptionHandler  extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ProductIdMismatchException.class,
             ConstraintViolationException.class,
-            DataIntegrityViolationException.class })
+            DataIntegrityViolationException.class,
+             NullPointerException.class})
     public ResponseEntity<Object> handleBadRequest(
             Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getLocalizedMessage(),
+        return handleExceptionInternal(ex, ex.getLocalizedMessage() + "\n Please try again",
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+
+
 }

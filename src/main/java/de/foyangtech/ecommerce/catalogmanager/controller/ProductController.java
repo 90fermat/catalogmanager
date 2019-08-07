@@ -46,6 +46,8 @@ public class ProductController {
 
     private Enum viewType = ViewType.LIST;
 
+    private List<ProductImage> photos;
+
 /*    *//**
      * return all products
      *//*
@@ -70,13 +72,16 @@ public class ProductController {
     public String allProducts(@RequestParam(value = "view", required = false) String view, Model model) {
 
         List<Product> products = productDao.findAll();
+
         model.addAttribute("products", products);
 
         if(view == null || view.equals("list")){
             viewType = ViewType.LIST;
         } else {
             viewType = ViewType.IMAGE;
+            photos = imageDao.findAll();
         }
+        model.addAttribute("photos", photos);
         model.addAttribute("viewType", viewType);
         model.addAttribute("enumList", ViewType.LIST);
         model.addAttribute("enumImage", ViewType.IMAGE);
@@ -206,17 +211,27 @@ public class ProductController {
     }
 
     @GetMapping("/imageDisplay")
-    public void showImages(@RequestParam("id") Integer id, HttpServletResponse response, HttpServletRequest request)
+    public void showImage(@RequestParam("id") Integer id, HttpServletResponse response, HttpServletRequest request)
             throws ServletException, IOException, SQLException {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        //byte[] bytes = Base64.decodeBase64(productDao.findPhotoById(id));
-
-       // byte[] bytes = ph.getBytes(1, (int) ph.);
-      //  InputStream inputStream = new ByteArrayInputStream(bytes);
-       // IOUtils.copy(inputStream, response.getOutputStream());
 
         response.getOutputStream().write(imageDao.findDataById(productDao.findPhotoById(id)));
         response.getOutputStream().close();
     }
 
+    @GetMapping("/imageDisplay_list")
+    public void showImages(HttpServletResponse response, HttpServletRequest request)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+
+        //byte[] bytes = Base64.decodeBase64(productDao.findPhotoById(id));
+        // byte[] bytes = ph.getBytes(1, (int) ph.);
+        //  InputStream inputStream = new ByteArrayInputStream(bytes);
+        // IOUtils.copy(inputStream, response.getOutputStream());
+
+        if(photos.iterator().hasNext()) {
+            response.getOutputStream().write(photos.iterator().next().getData());
+            response.getOutputStream().close();
+        }
+    }
 }
