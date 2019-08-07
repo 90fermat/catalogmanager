@@ -3,12 +3,14 @@ package de.foyangtech.ecommerce.catalogmanager.service;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ProductDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.UserDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
+import de.foyangtech.ecommerce.catalogmanager.persistance.model.ProductImage;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,7 +59,60 @@ public class DBinit implements CommandLineRunner {
 
         //Create some products
 
+        Product chiffonB = new Product(
+                "chiffon blanc",
+                "458788acde",
+                12,
+                4,
+                "Chiffon GmbH",
+                "http://chiffon.com",
+                "chiffon",
+                new ProductImage("src/main/resources/images/seamless.jpg"),
+                new Date());
+        Product chiffonT = new Product(
+                "chiffon tandon",
+                "451288acde",
+                14,
+                6,
+                "Chiffon GmbH",
+                "http://chiffon.com",
+                "chiffon",
+                new ProductImage("src/main/resources/images/seamless.jpg"),
+                new Date());
+        Product chiffonV = new Product(
+                "chiffon vert",
+                "351288acde",
+                25,
+                9,
+                "Chiffon GmbH",
+                "http://chiffon.com",
+                "chiffon",
+                new ProductImage("src/main/resources/images/seamless.jpg"),
+                new Date());
+        Product chiffonR = new Product(
+                "chiffon rouge",
+                "351288a41e",
+                15,
+                9,
+                "Chiffon GmbH",
+                "http://chiffon.com",
+                "chiffon",
+                new ProductImage("src/main/resources/images/seamless.jpg"),
+                new Date());
+        Product chiffonU = new Product(
+                "chiffon malte",
+                "123288acde",
+                32,
+                12,
+                "Chiffon GmbH",
+                "http://chiffon.com",
+                "chiffon",
+                new ProductImage("src/main/resources/images/seamless.jpg"),
+                new Date());
 
+        List<Product> products = Arrays.asList(chiffonB, chiffonR, chiffonT, chiffonU, chiffonV);
+
+        productDao.saveAll(products);
 
     }
 }

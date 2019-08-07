@@ -57,7 +57,7 @@ public class Product {
 
     private String category;
 
-    @NotNull
+
     @Transient
     private MultipartFile multipartFile;
 
@@ -73,7 +73,7 @@ public class Product {
                    @Min(1) double buyingPrice,
                    @Length(min = 3, max = 20) String supplierName,
                    @Length(min = 10, max = 200) String supplierUrl,
-                    String category, ProductImage image)
+                    String category, ProductImage image, Date timestamp)
     {
         this.name = name;
         this.code = code;
@@ -83,6 +83,7 @@ public class Product {
         this.supplierUrl = supplierUrl;
         this.category = category;
         this.image  = image;
+        this.timestamp = timestamp;
         this.image.setProduct(this);
     }
 

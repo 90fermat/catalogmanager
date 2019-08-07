@@ -4,8 +4,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.IIOException;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Entity
 @Component
@@ -32,14 +38,26 @@ public class ProductImage {
 
     public ProductImage() {    }
 
-    public ProductImage(String fileName, String fileType, byte[] data) {
-        this.fileName = fileName;
-        this.fileType = fileType;
-        this.data = data;
+    public ProductImage(String data) {
+        Path path = Paths.get(data);
+        fileName  = path.getFileName().toString();
+        fileType = getExtension(this.fileName);
+
+      try {
+          this.data = Files.readAllBytes(path);
+      } catch (IOException io) {
+          System.out.println(io.getMessage());
+      }
     }
 
     public String getFileName() {
         return fileName;
+    }
+
+    private String getExtension(String fileName) {
+        String[] strings = fileName.split("\\.");
+        String extension = strings[1];
+        return extension;
     }
 
     public void setFileName(String fileName) {

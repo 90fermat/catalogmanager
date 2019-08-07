@@ -11,7 +11,130 @@
     <a type="button" role="button" class="btn btn-secondary my-2 my-sm-0"  th:href="@{/products(view=images)}"><i class="far fa-images"></i></a>
 
 </div>
-<div th:insert="fragments.html::display(${viewType})"></div>
+<div >
+    <div th:if="${viewType} == ${enumList}">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark" align="center">
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Supplier Name</th>
+                <th scope="col">Supplier Url</th>
+                <th scope="col">Buying price</th>
+                <th scope="col">Selling price</th>
+                <th scope="col">Image</th>
+            </tr>
+            </thead>
+            <tbody align="center">
+            <tr th:if="!${products.iterator().hasNext()}">
+                <td colspan="7"> No Products Available </td>
+            </tr>
+            <tr th:each="product, itemStat : ${products}">
+                <td><span th:text="*{product.code}"></span></td>
+                <td><span th:text="*{product.name}" ></span></td>
+                <td><span th:text="*{product.supplierName}" ></span></td>
+                <td><span th:text="*{product.supplierUrl }" ></span></td>
+                <td><span th:text="*{product.buyingPrice}" ></span></td>
+                <td><span th:text="*{product.sellingPrice}" ></span></td>
+                <td>
+                    <img class="img-thumbnail" th:src="@{/products/imageDisplay(id=${product.id})}" th:width="40" th:height="40"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${viewType} == ${enumImage}">
+        <div class="alert alert-danger" th:if="${products.isEmpty()}" align="center">
+            No products available
+        </div>
+        <table class="table table-borderless" width="500" border="0" cellpadding="5">
+
+            <tr th:if="!${photos.iterator().hasNext()}">
+                <td colspan="2"> No Products Available </td>
+            </tr>
+            <tr th:each="index: ${#numbers.sequence(0, photos.size(), 4)}">
+                <td  th:if="${photos.size()> index}" align="center" valign="center">
+                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index).product.name}" th:width="200" th:height="200" />
+                    <br />
+                    <p>
+                        <span th:text="*{photos.get(index).product.buyingPrice}"></span>
+                        | <span th:text="*{photos.get(index).product.sellingPrice}"></span>
+                        | <span th:text="*{photos.get(index).product.name}"></span>
+                    </p>
+                </td>
+                <td  th:if="${photos.size()> index + 1}" align="center" valign="center">
+                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 1).product.name}" th:width="200" th:height="200" />
+                    <br />
+                    <p>
+                        <span th:text="*{photos.get(index + 1).product.buyingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 1).product.sellingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 1).product.name}"></span>
+                    </p>
+                </td>
+                <td  th:if="${photos.size()> index + 2}" align="center" valign="center">
+                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 2).product.name}" th:width="200" th:height="200" />
+                    <br />
+                    <p>
+                        <span th:text="*{photos.get(index + 2).product.buyingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 2).product.sellingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 2).product.name}"></span>
+                    </p>
+                </td>
+                <td  th:if="${photos.size()> index + 3}" align="center" valign="center">
+                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 3).product.name}" th:width="200" th:height="200" />
+                    <br />
+                    <p>
+                        <span th:text="*{photos.get(index + 3).product.buyingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 3).product.sellingPrice}"></span>
+                        | <span th:text="*{photos.get(index + 3).product.name}"></span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <!--   To choose later or not
+
+        <div class="row" th:each="index: ${#numbers.sequence(0, products.size(), 4)}">
+            <div class="col-sm-3" th:if="${products.size()> index}" align="center">
+                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index).id})}" th:alt="*{products.get(index).name}" th:width="200" th:height="200" />
+                <br />
+                <p>
+                    <span th:text="*{products.get(index).buyingPrice}"></span>
+                    | <span th:text="*{products.get(index).sellingPrice}"></span>
+                    | <span th:text="*{products.get(index).name}"></span>
+                </p>
+            </div>
+            <div class="col-sm-3"  th:if="${products.size()> index + 1}" align="center">
+                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 1).name}" th:width="200" th:height="200" />
+                <br />
+                <p>
+                    <span th:text="*{products.get(index + 1).buyingPrice}"></span>
+                    | <span th:text="*{products.get(index + 1).sellingPrice}"></span>
+                    | <span th:text="*{products.get(index + 1).name}"></span>
+                </p>
+            </div>
+            <div class="col-sm-3"  th:if="${products.size()> index + 2}" align="center">
+                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 2).name}" th:width="200" th:height="200" />
+                <br />
+                <p>
+                    <span th:text="*{products.get(index + 2).buyingPrice}"></span>
+                    | <span th:text="*{products.get(index + 2).sellingPrice}"></span>
+                    | <span th:text="*{products.get(index + 2).name}"></span>
+                </p>
+            </div>
+            <div class="col-sm-3"  th:if="${products.size()> index + 3}" align="center">
+                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index + 1).id})}" th:alt="*{products.get(index + 3).name}" th:width="200" th:height="200" />
+                <br />
+                <p>
+                    <span th:text="*{products.get(index + 3).buyingPrice}"></span>
+                    | <span th:text="*{products.get(index + 3).sellingPrice}"></span>
+                    | <span th:text="*{products.get(index + 3).name}"></span>
+                </p>
+            </div>
+        </div>
+        -->
+    </div>
+</div>
 
 
 <!-- Bootstrap core JavaScript
