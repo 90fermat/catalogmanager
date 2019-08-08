@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -26,7 +27,13 @@ public class HomeController {
     }
 
     @GetMapping("login")
-    public String login() {return "login";}
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+
+        if ("true".equals(error)){
+            model.addAttribute("error", true);
+        }
+        return "login";
+    }
 
     @GetMapping("logout_msg")
     public String logout() {return "logout_msg";}
