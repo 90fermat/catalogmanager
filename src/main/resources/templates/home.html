@@ -11,18 +11,10 @@
 </div>
 
 <!-- Main component for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <!--Usage of models we wrote in WepAppController th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username} -->
-    <h3 th:text="'Welcome to the Catalog Manager  created by FoyangTech'"></h3>
-
-    <p> is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work.
-        It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>
-        <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
-    </p>
-</div>
-<div class="bd-example">
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+<div class="row" style="height: 200px"></div>
+<div class="bd-example row" style="">
+    <div class="col-md-2"></div>
+    <div id="carouselExampleCaptions" class="carousel slide col-md-8" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
@@ -33,62 +25,72 @@
         <div class="carousel-inner">
             <div th:if="${addedList.lastAdded.size()== addedList.MAX}" class="carousel-item active">
                 <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(4).id})}"
-                     class="d-block w-100" alt="...">
+                     class="d-md-block w-100" width="400" height="400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 th:text="${addedList.lastAdded.get(4).name}"></h5>
-                    <p style="color: red" th:text="${addedList.lastAdded.get(4).buyingPrice}"> | </p>
-                    <p style="color: green"th:text="${addedList.lastAdded.get(4).sellingPrice}"> | </p>
-                    <p th:text="${addedList.lastAdded.get(4).supplierName}"></p>
-                    <br>
-                    <p th:text="${addedList.lastAdded.get(4).supplierUrl}"></p>
+                    <p>
+                        <span style="color: red" th:text="${addedList.lastAdded.get(4).buyingPrice}"> | </span>
+                        <span style="color: green"th:text="${addedList.lastAdded.get(4).sellingPrice}"> | </span>
+                        <span th:text="${addedList.lastAdded.get(4).supplierName}"></span>
+                        <br>
+                        <span th:text="${addedList.lastAdded.get(4).supplierUrl}"></span>
+                    </p>
                 </div>
             </div>
             <div th:if="${addedList.lastAdded.size()>= (addedList.MAX - 1)}" class="carousel-item">
                 <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(3).id})}"
-                     class="d-block w-100" alt="...">
+                     class="d-md-block w-100" width="400" height="400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 th:text="${addedList.lastAdded.get(3).name}"></h5>
-                    <p style="color: red" th:text="${addedList.lastAdded.get(3).buyingPrice}"> | </p>
-                    <p style="color: green"th:text="${addedList.lastAdded.get(3).sellingPrice}"> | </p>
-                    <p th:text="${addedList.lastAdded.get(3).supplierName}"></p>
-                    <br>
-                    <p th:text="${addedList.lastAdded.get(3).supplierUrl}"></p>
+                    <p>
+                        <span style="color: red" th:text="${addedList.lastAdded.get(3).buyingPrice}"> | </span>
+                        <span style="color: green"th:text="${addedList.lastAdded.get(3).sellingPrice}"> | </span>
+                        <span th:text="${addedList.lastAdded.get(3).supplierName}"></span>
+                        <br>
+                        <span th:text="${addedList.lastAdded.get(3).supplierUrl}"></span>
+                    </p>
                 </div>
             </div>
             <div th:if="${addedList.lastAdded.size()>= (addedList.MAX - 2)}" class="carousel-item">
                 <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(2).id})}"
-                     class="d-block w-100" alt="...">
+                     class="d-md-block w-100" width="400" height="400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 th:text="${addedList.lastAdded.get(2).name}"></h5>
-                    <p style="color: red" th:text="${addedList.lastAdded.get(2).buyingPrice}"> | </p>
-                    <p style="color: green"th:text="${addedList.lastAdded.get(2).sellingPrice}"> | </p>
-                    <p th:text="${addedList.lastAdded.get(2).supplierName}"></p>
-                    <br>
-                    <p th:text="${addedList.lastAdded.get(2).supplierUrl}"></p>
+                    <p>
+                        <span style="color: red" th:text="${addedList.lastAdded.get(2).buyingPrice}"> | </span>
+                        <span style="color: green"th:text="${addedList.lastAdded.get(2).sellingPrice}"> | </span>
+                        <span th:text="${addedList.lastAdded.get(2).supplierName}"></span>
+                        <br>
+                        <span th:text="${addedList.lastAdded.get(2).supplierUrl}"></span>
+                    </p>
                 </div>
             </div>
             <div th:if="${addedList.lastAdded.size() >= (addedList.MAX - 3)}" class="carousel-item">
                 <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(1).id})}"
-                     class="d-block w-100" alt="...">
+                     class="d-md-block w-100" width="400" height="400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 th:text="${addedList.lastAdded.get(1).name}"></h5>
-                    <p style="color: red" th:text="${addedList.lastAdded.get(1).buyingPrice}"> | </p>
-                    <p style="color: green"th:text="${addedList.lastAdded.get(1).sellingPrice}"> | </p>
-                    <p th:text="${addedList.lastAdded.get(1).supplierName}"></p>
-                    <br>
-                    <p th:text="${addedList.lastAdded.get(1).supplierUrl}"></p>
+                    <p>
+                        <span style="color: red" th:text="${addedList.lastAdded.get(1).buyingPrice}"> | </span>
+                        <span style="color: green"th:text="${addedList.lastAdded.get(1).sellingPrice}"> | </span>
+                        <span th:text="${addedList.lastAdded.get(1).supplierName}"></span>
+                        <br>
+                        <span th:text="${addedList.lastAdded.get(1).supplierUrl}"></span>
+                    </p>
                 </div>
             </div>
             <div th:if="${addedList.lastAdded.size() >= (addedList.MAX - 4)}" class="carousel-item">
                 <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(0).id})}"
-                     class="d-block w-100" alt="...">
+                     class="d-md-block w-100" width="400" height="400" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 th:text="${addedList.lastAdded.get(0).name}"></h5>
-                    <p style="color: red" th:text="${addedList.lastAdded.get(0).buyingPrice}"> | </p>
-                    <p style="color: green"th:text="${addedList.lastAdded.get(0).sellingPrice}"> | </p>
-                    <p th:text="${addedList.lastAdded.get(0).supplierName}"></p>
-                    <br>
-                    <p th:text="${addedList.lastAdded.get(0).supplierUrl}"></p>
+                    <p>
+                        <span style="color: red" th:text="${addedList.lastAdded.get(0).buyingPrice}"> | </span>
+                        <span style="color: green"th:text="${addedList.lastAdded.get(0).sellingPrice}"> | </span>
+                        <span th:text="${addedList.lastAdded.get(0).supplierName}"></span>
+                        <br>
+                        <span th:text="${addedList.lastAdded.get(0).supplierUrl}"></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -101,6 +103,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+    <div class="col-md-2"></div>
 </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
