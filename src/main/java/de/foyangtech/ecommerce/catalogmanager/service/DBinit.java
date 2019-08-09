@@ -20,12 +20,16 @@ public class DBinit implements CommandLineRunner {
 
     private ProductDao productDao;
 
+    private ProductService productService;
+
     private PasswordEncoder passwordEncoder;
 
-    public DBinit(UserDao userDao, PasswordEncoder passwordEncoder, ProductDao productDao) {
+    public DBinit(UserDao userDao, PasswordEncoder passwordEncoder,
+                  ProductDao productDao, ProductService productService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.productDao = productDao;
+        this.productService = productService;
     }
 
     @Override
@@ -112,7 +116,7 @@ public class DBinit implements CommandLineRunner {
 
         List<Product> products = Arrays.asList(chiffonB, chiffonR, chiffonT, chiffonU, chiffonV);
 
-        productDao.saveAll(products);
+        productService.addAllProducts(products);
 
     }
 }

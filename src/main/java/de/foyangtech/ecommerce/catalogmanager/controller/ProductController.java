@@ -6,10 +6,8 @@ import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ImageDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ProductDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.ProductImage;
+import de.foyangtech.ecommerce.catalogmanager.service.ProductService;
 import de.foyangtech.ecommerce.catalogmanager.service.ViewType;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.hibernate.type.BlobType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,15 +19,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Date;
 import java.util.List;
-import static java.sql.Types.BLOB;
 
 @Controller
 @RequestMapping("products")
@@ -43,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private ImageDao imageDao;
+
+    @Autowired
+    private ProductService productService;
 
     private Enum viewType = ViewType.LIST;
 
@@ -86,7 +82,7 @@ public class ProductController {
         model.addAttribute("enumList", ViewType.LIST);
         model.addAttribute("enumImage", ViewType.IMAGE);
 
-        return "listProducts";
+        return "list_products";
     }
 
     /**
@@ -147,25 +143,25 @@ public class ProductController {
             System.out.println("Error append by trying to transfer MultipartFile and " +
                     io.getMessage());
             model.addAttribute("badError", true);
-            return "createProduct";
+            return "create_product";
         }
 
 
 
 
         if (bindingResult.hasErrors()) {
-            return "createProduct";
+            return "create_product";
         }
         image.setProduct(product);
         product.setImage(image);
-        Product productAdded = productDao.save(product);
+        Product productAdded = productService.addProduct(product);
         if (productAdded == null) {
-            return "createProduct";
+            return "create_product";
         }
          model.addAttribute("productAdded", product);
          model.addAttribute("created", true);
 
-        return "createProduct";
+        return "create_product";
 
     }
     private String getExtension(String fileName) {
@@ -188,7 +184,7 @@ public class ProductController {
         }
         productDao.findById(id)
                 .orElseThrow(ProductNotFoundException::new);
-        return productDao.save(product);
+        return productService.addProduct(product);
     }
 
     @GetMapping("name/{nameLike}")
@@ -207,7 +203,7 @@ public class ProductController {
 
         model.addAttribute("product", product);
         model.addAttribute("created", false);
-        return "createProduct";
+        return "create_product";
     }
 
     @GetMapping("/imageDisplay")

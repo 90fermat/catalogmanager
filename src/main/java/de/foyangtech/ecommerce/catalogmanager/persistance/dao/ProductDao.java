@@ -28,5 +28,4 @@ public interface ProductDao extends JpaRepository<Product, Long> {
     String findPhotoById(@Param("id") Integer id);
 
 
-
 }

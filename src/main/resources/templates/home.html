@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html::headerfiles">
+    <title>Catalog Manager</title>
+
+</head>
+<body>
+<div th:insert="fragments.html::nav">
+</div>
+
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <!--Usage of models we wrote in WepAppController th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username} -->
+    <h3 th:text="'Welcome to the Catalog Manager  created by FoyangTech'"></h3>
+
+    <p> is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work.
+        It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+    <p>
+        <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
+    </p>
+</div>
+<div class="bd-example">
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div th:if="${addedList.lastAdded.size()== addedList.MAX}" class="carousel-item active">
+                <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(4).id})}"
+                     class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 th:text="${addedList.lastAdded.get(4).name}"></h5>
+                    <p style="color: red" th:text="${addedList.lastAdded.get(4).buyingPrice}"> | </p>
+                    <p style="color: green"th:text="${addedList.lastAdded.get(4).sellingPrice}"> | </p>
+                    <p th:text="${addedList.lastAdded.get(4).supplierName}"></p>
+                    <br>
+                    <p th:text="${addedList.lastAdded.get(4).supplierUrl}"></p>
+                </div>
+            </div>
+            <div th:if="${addedList.lastAdded.size()>= (addedList.MAX - 1)}" class="carousel-item">
+                <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(3).id})}"
+                     class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 th:text="${addedList.lastAdded.get(3).name}"></h5>
+                    <p style="color: red" th:text="${addedList.lastAdded.get(3).buyingPrice}"> | </p>
+                    <p style="color: green"th:text="${addedList.lastAdded.get(3).sellingPrice}"> | </p>
+                    <p th:text="${addedList.lastAdded.get(3).supplierName}"></p>
+                    <br>
+                    <p th:text="${addedList.lastAdded.get(3).supplierUrl}"></p>
+                </div>
+            </div>
+            <div th:if="${addedList.lastAdded.size()>= (addedList.MAX - 2)}" class="carousel-item">
+                <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(2).id})}"
+                     class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 th:text="${addedList.lastAdded.get(2).name}"></h5>
+                    <p style="color: red" th:text="${addedList.lastAdded.get(2).buyingPrice}"> | </p>
+                    <p style="color: green"th:text="${addedList.lastAdded.get(2).sellingPrice}"> | </p>
+                    <p th:text="${addedList.lastAdded.get(2).supplierName}"></p>
+                    <br>
+                    <p th:text="${addedList.lastAdded.get(2).supplierUrl}"></p>
+                </div>
+            </div>
+            <div th:if="${addedList.lastAdded.size() >= (addedList.MAX - 3)}" class="carousel-item">
+                <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(1).id})}"
+                     class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 th:text="${addedList.lastAdded.get(1).name}"></h5>
+                    <p style="color: red" th:text="${addedList.lastAdded.get(1).buyingPrice}"> | </p>
+                    <p style="color: green"th:text="${addedList.lastAdded.get(1).sellingPrice}"> | </p>
+                    <p th:text="${addedList.lastAdded.get(1).supplierName}"></p>
+                    <br>
+                    <p th:text="${addedList.lastAdded.get(1).supplierUrl}"></p>
+                </div>
+            </div>
+            <div th:if="${addedList.lastAdded.size() >= (addedList.MAX - 4)}" class="carousel-item">
+                <img src="..." th:src="@{/products/imageDisplay(id=${addedList.lastAdded.get(0).id})}"
+                     class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 th:text="${addedList.lastAdded.get(0).name}"></h5>
+                    <p style="color: red" th:text="${addedList.lastAdded.get(0).buyingPrice}"> | </p>
+                    <p style="color: green"th:text="${addedList.lastAdded.get(0).sellingPrice}"> | </p>
+                    <p th:text="${addedList.lastAdded.get(0).supplierName}"></p>
+                    <br>
+                    <p th:text="${addedList.lastAdded.get(0).supplierUrl}"></p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.js" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

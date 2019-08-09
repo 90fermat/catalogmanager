@@ -54,7 +54,7 @@
             </tr>
             <tr th:each="index: ${#numbers.sequence(0, photos.size(), 4)}">
                 <td  th:if="${photos.size()> index}" align="center" valign="center">
-                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index).product.name}" th:width="200" th:height="200" />
+                    <img src="list_products.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index).product.name}" th:width="200" th:height="200" />
                     <br />
                     <p>
                         <span th:text="*{photos.get(index).product.buyingPrice}"></span>
@@ -63,7 +63,7 @@
                     </p>
                 </td>
                 <td  th:if="${photos.size()> index + 1}" align="center" valign="center">
-                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 1).product.name}" th:width="200" th:height="200" />
+                    <img src="list_products.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 1).product.name}" th:width="200" th:height="200" />
                     <br />
                     <p>
                         <span th:text="*{photos.get(index + 1).product.buyingPrice}"></span>
@@ -72,7 +72,7 @@
                     </p>
                 </td>
                 <td  th:if="${photos.size()> index + 2}" align="center" valign="center">
-                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 2).product.name}" th:width="200" th:height="200" />
+                    <img src="list_products.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 2).product.name}" th:width="200" th:height="200" />
                     <br />
                     <p>
                         <span th:text="*{photos.get(index + 2).product.buyingPrice}"></span>
@@ -81,7 +81,7 @@
                     </p>
                 </td>
                 <td  th:if="${photos.size()> index + 3}" align="center" valign="center">
-                    <img src="listProducts.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 3).product.name}" th:width="200" th:height="200" />
+                    <img src="list_products.html" th:src="@{/products/imageDisplay_list}" th:alt="*{photos.get(index + 3).product.name}" th:width="200" th:height="200" />
                     <br />
                     <p>
                         <span th:text="*{photos.get(index + 3).product.buyingPrice}"></span>
@@ -96,7 +96,7 @@
 
         <div class="row" th:each="index: ${#numbers.sequence(0, products.size(), 4)}">
             <div class="col-sm-3" th:if="${products.size()> index}" align="center">
-                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index).id})}" th:alt="*{products.get(index).name}" th:width="200" th:height="200" />
+                <img src="list_products.html" th:src="@{/products/imageDisplay(id=${products.get(index).id})}" th:alt="*{products.get(index).name}" th:width="200" th:height="200" />
                 <br />
                 <p>
                     <span th:text="*{products.get(index).buyingPrice}"></span>
@@ -105,7 +105,7 @@
                 </p>
             </div>
             <div class="col-sm-3"  th:if="${products.size()> index + 1}" align="center">
-                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 1).name}" th:width="200" th:height="200" />
+                <img src="list_products.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 1).name}" th:width="200" th:height="200" />
                 <br />
                 <p>
                     <span th:text="*{products.get(index + 1).buyingPrice}"></span>
@@ -114,7 +114,7 @@
                 </p>
             </div>
             <div class="col-sm-3"  th:if="${products.size()> index + 2}" align="center">
-                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 2).name}" th:width="200" th:height="200" />
+                <img src="list_products.html" th:src="@{/products/imageDisplay(id=${products.get(index+ 1).id})}" th:alt="*{products.get(index + 2).name}" th:width="200" th:height="200" />
                 <br />
                 <p>
                     <span th:text="*{products.get(index + 2).buyingPrice}"></span>
@@ -123,7 +123,7 @@
                 </p>
             </div>
             <div class="col-sm-3"  th:if="${products.size()> index + 3}" align="center">
-                <img src="listProducts.html" th:src="@{/products/imageDisplay(id=${products.get(index + 1).id})}" th:alt="*{products.get(index + 3).name}" th:width="200" th:height="200" />
+                <img src="list_products.html" th:src="@{/products/imageDisplay(id=${products.get(index + 1).id})}" th:alt="*{products.get(index + 3).name}" th:width="200" th:height="200" />
                 <br />
                 <p>
                     <span th:text="*{products.get(index + 3).buyingPrice}"></span>
