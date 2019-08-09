@@ -37,6 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().permitAll()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/home", true)
                 //.failureHandler(customAuthenticationFailureHandler())
                 .and()
                 .logout()
