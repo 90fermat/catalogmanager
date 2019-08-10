@@ -21,68 +21,186 @@
         <p th:text="${product.toString()}"></p>
     </div>
 
-    <div class=" card card-block"  style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
-        <form action="#" th:action="@{/products/create}" th:object="${product}"  enctype="multipart/form-data" method="post">
-            <fieldset>
-                <legend>Create Product</legend>
-                <div class="card">
-                    <p  class="form-group">
-                        <label for="pcode">Code</label>
-                        <input type="text" id="pcode" required placeholder="code" th:field="*{code}"/>
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
-                    </p>
-
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-
-                        </div>
-                        <label for="pname">Name</label>
-                        <input type="text" id="pname" required placeholder="name" th:field="*{name}"/>
-                    </p>
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}">
-
-                        </div>
-                        <label for="supplierName">Supplier name</label>
-                        <input type="text" id="supplierName" placeholder="supplier name" th:field= "*{supplierName}"/>
-                    </p>
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}">
-
-                        </div>
-                        <label for="supplierUrl">Buying Price</label>
-                        <input type="text" id="buyingPrice" placeholder="buying price" th:field="*{buyingPrice}"/>
-                    </p>
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierUrl')}" th:errors="*{supplierUrl}">
-
-                        </div>
-                        <label for="supplierUrl">Supplier Url</label>
-                        <input type="url" id="supplierUrl" placeholder="supplier Url" th:field="*{supplierUrl}"/>
-                    </p>
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}">
-
-                        </div>
-                        <label for="sellingPrice">Selling Price</label>
-                        <input type="text" id="sellingPrice" placeholder="selling Price" th:field = "*{sellingPrice}"/>
-                    </p>
-                    <p  class="form-group">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}">
-
-                        </div>
-                        <label >Image</label>
-                        <img  id="preview" alt="..." class="img-thumbnail" width="100" height="100"><br>
-                        <input type="file" name="file" required th:field = "*{multipartFile}"
-                               onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                    </p>
+    <div class="card  mx-auto my-2 mx-2 border-primary col-lg-8"  >
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="..." class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-header bg-transparent">
+                    <ul class="nav nav-pills card-header-pills" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="true">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="catalog-tab" data-toggle="tab" href="#catalog" role="tab" aria-controls="catalog" aria-selected="false ">Catalog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="category" aria-selected="false" >Category</a>
+                        </li>
+                    </ul>
                 </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active"id="product" role="tabpanel" aria-labelledby="product-tab">
+                            <form action="#" th:action="@{/products/create}" th:object="${product}"  enctype="multipart/form-data" method="post">
+                                <fieldset class="card-body text-info">
+                                    <legend class="card-title text-center">Create Product</legend>
+                                    <div class="">
+                                        <div  class="input-group form-group" style="border-radius:1rem; height:50px;font-size:14pt">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@Code</span>
+                                            </div>
+                                            <input class="col-md-8"  type="text" id="pcode" required placeholder="code" th:field="*{code}"/>
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
+                                        </div>
+
+                                        <div class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >Name</span>
+                                            </div>
+                                            <input class="col-md-8" type="text" id="pname" required placeholder="name" th:field="*{name}"/>
+                                        </div>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}">
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >@SupplierName</span>
+                                            </div>
+                                            <input class="col-md-8" type="text" id="supplierName" placeholder="supplier name" th:field= "*{supplierName}"/>
+                                        </div>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierUrl')}" th:errors="*{supplierUrl}">
+                                            </div>
+                                            <div class="input-group-prepend" style="height:50px;font-size:14pt">
+                                                <span class="input-group-text" >@SupplierUrl</span>
+                                            </div>
+                                            <input class="col-md-8" type="url" id="supplierUrl" placeholder="supplier Url" th:field="*{supplierUrl}"/>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <div class="input-group form-group" style="height:50px;font-size:14pt">
+                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}">
+                                                    </div>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" >@buyingPrice</span>
+                                                    </div>
+                                                    <input type="text" id="buyingPrice" placeholder="buying price" th:field="*{buyingPrice}"/>
+                                                </div>
+                                                <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}">
+                                                    </div>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" >@SellingPrice</span>
+                                                    </div>
+                                                    <input type="text" id="sellingPrice" placeholder="selling Price" th:field = "*{sellingPrice}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <img src="..." id="preview" alt="..." class="img-thumbnail" width="100" height="100"><br>
+                                            </div>
+                                        </div>
+                                        <label >Image</label>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}">
+                                            </div>
+                                            <input type="file" name="file" required th:field = "*{multipartFile}"
+                                                   onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="card-footer text-center">
+                                    <input class="btn btn-success " style="width: 150px;margin-right: 30px" type="submit" id="submitButton" th:value="Save">
+                                    <input class="btn  btn-danger" style="width: 150px" type="reset" id="resetButton" name="reset" th:value="Reset"/>
+                                </div> 
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="catalog" role="tabpanel" aria-labelledby="catalog-tab">
+                            <form action="#" th:action="@{/products/create/catalog}" th:object="${product}"  enctype="multipart/form-data" method="post">
+                                <fieldset class="card-body text-info">
+                                    <legend class="card-title text-center">Create Catalog</legend>
+                                    <div class="">
+                                        <div  class="input-group form-group" style="border-radius:1rem; height:50px;font-size:14pt">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >@Code</span>
+                                            </div>
+                                            <input class="col-md-8"  type="text" id="pcod" required placeholder="code" th:field="*{code}"/>
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
+                                        </div>
+
+                                        <div class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >Name</span>
+                                            </div>
+                                            <input class="col-md-8" type="text" id="pnam" required placeholder="name" th:field="*{name}"/>
+                                        </div>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}">
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" >@SupplierName</span>
+                                            </div>
+                                            <input class="col-md-8" type="text" id="supplierNam" placeholder="supplier name" th:field= "*{supplierName}"/>
+                                        </div>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierUrl')}" th:errors="*{supplierUrl}">
+                                            </div>
+                                            <div class="input-group-prepend" style="height:50px;font-size:14pt">
+                                                <span class="input-group-text" >@SupplierUrl</span>
+                                            </div>
+                                            <input class="col-md-8" type="url" id="supplierUr" placeholder="supplier Url" th:field="*{supplierUrl}"/>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <div class="input-group form-group" style="height:50px;font-size:14pt">
+                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}">
+                                                    </div>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" >@buyingPrice</span>
+                                                    </div>
+                                                    <input type="text" id="buyingPric" placeholder="buying price" th:field="*{buyingPrice}"/>
+                                                </div>
+                                                <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}">
+                                                    </div>
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" >@SellingPrice</span>
+                                                    </div>
+                                                    <input type="text" id="sellingPric" placeholder="selling Price" th:field = "*{sellingPrice}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <img src="..." id="previe" alt="..." class="img-thumbnail" width="100" height="100"><br>
+                                            </div>
+                                        </div>
+                                        <label >Image</label>
+                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
+                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}">
+                                            </div>
+                                            <input type="file" name="file" required th:field = "*{multipartFile}"
+                                                   onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="card-footer text-center">
+                                    <input class="btn btn-success " style="width: 150px;margin-right: 30px" type="submit" id="submitButto" th:value="Save">
+                                    <input class="btn  btn-danger" style="width: 150px" type="reset" id="resetButto" name="reset" th:value="Reset"/>
+                                </div> 
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-                 <input class="btn  btn-success" type="submit" id="submitButton" th:value="Save">
-                 <input class="btn  btn-danger" type="reset" id="resetButton" name="reset" th:value="Reset"/>
-            </fieldset>
-        </form>
     </div>
 
 <!-- Bootstrap core JavaScript
