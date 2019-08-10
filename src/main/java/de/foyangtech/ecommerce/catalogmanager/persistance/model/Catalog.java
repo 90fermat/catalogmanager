@@ -1,3 +1,4 @@
+/*
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
 import javax.persistence.*;
@@ -15,3 +16,4 @@ public class Catalog {
 
     public Catalog() {}
 }
+*/
