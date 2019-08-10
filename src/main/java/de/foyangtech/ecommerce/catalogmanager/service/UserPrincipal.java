@@ -51,4 +51,10 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return user.getActive();
     }
+
+    public String getFirstname() { return user.getFirstname();}
+
+    public String getLastname() { return user.getLastname();}
+
+    public User.Gender getGender() { return  user.getGender();}
 }

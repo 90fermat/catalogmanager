@@ -38,6 +38,7 @@ public class DBinit implements CommandLineRunner {
         User vanessa = new User(
                 "Ngueneko",
                 "Vanessa",
+                User.Gender.FEMALE,
                 "vngueneko",
                 passwordEncoder.encode("abcdef"),
                 "ROLE_ADMIN" );
@@ -45,6 +46,7 @@ public class DBinit implements CommandLineRunner {
         User steve = new User(
                 "Ngueneko",
                 "Steve",
+                User.Gender.MALE,
                 "sngueneko",
                 passwordEncoder.encode("abcdef"),
                 "ROLE_ADMIN" );
@@ -52,6 +54,7 @@ public class DBinit implements CommandLineRunner {
         User cyrille = new User(
                 "Foyang",
                 "Cyrille",
+                User.Gender.MALE,
                 "cfoyang",
                 passwordEncoder.encode("abcdef"),
                 "ROLE_ADMIN" );

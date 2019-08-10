@@ -19,17 +19,20 @@ public class User {
     private String password;
     private String role;
     private boolean active;
+    private Gender gender;
 
     public User() {}
 
     public User(String firstname,
                 String lastname,
+                Gender gender,
                 String username,
                 String password,
                 String role )
     {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.gender = gender;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -90,5 +93,18 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public enum Gender {
+        MALE,
+        FEMALE;
     }
 }

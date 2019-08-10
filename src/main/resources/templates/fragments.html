@@ -37,9 +37,21 @@
                 </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
-                <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout <i class="fas fa-sign-out-alt"></i></button>
-            </form>
+
+            <div class="btn-group my-2 my-lg-0" sec:authorize="isAuthenticated()">
+                <button type="button" class="btn btn-sm  btn-outline-success">
+                    <i class="fas fa-user-circle" ></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"><span th:text="${#authentication.principal.lastname}"></span> <span th:text="${#authentication.principal.firstname}"></span></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    <a class="dropdown-item" href="/user_profil" ><i class="fas fa-address-card"></i> Profil</a>
+                    <a class="dropdown-item" href="/user_edit"><i class="fas fa-user-edit"></i> Edit</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout"  ><i class="fas fa-power-off" style="color:red"></i> Logout</a>
+                </div>
+            </div>
             <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/home}">
                 <button sec:authorize="isAnonymous()" href="#" th:href="@{/home}" class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
             </form>
@@ -61,6 +73,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script th:fragment="scriptj" src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.bundle.js" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
 <script src="/webjars/bootstrap/4.3.1/js/bootstrap.js" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
 </body>
 </html>

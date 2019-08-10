@@ -1,7 +1,9 @@
 package de.foyangtech.ecommerce.catalogmanager.controller;
 
 import de.foyangtech.ecommerce.catalogmanager.persistance.model.LastProductsAdded;
+import de.foyangtech.ecommerce.catalogmanager.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +23,9 @@ public class HomeController {
     }
 
     @GetMapping("home")
-    public String home(Model model) {
+    public String home(Model model, @AuthenticationPrincipal UserPrincipal user) {
         model.addAttribute("addedList",lastProductsAdded);
+        model.addAttribute("username",user.getUsername());
         return  "home";
     }
 
