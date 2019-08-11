@@ -20,7 +20,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull
     @Length(min = 3, max = 20)
@@ -32,8 +32,9 @@ public class Product {
     @Column(unique = true)
     private String code;
 
-//    @EmbeddedId
-//    private ProductId productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalog_id", referencedColumnName = "id")
+    private Catalog catalog;
 
     @Min(1)
     private double sellingPrice;
@@ -87,7 +88,21 @@ public class Product {
         this.image.setProduct(this);
     }
 
-    public long getId() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product )) return false;
+        return id != null && id.equals(((Product) o).getId());
+    }
+    @Override
+    public int hashCode() {
+        if(code != null) {
+            return 31 + code.hashCode();
+        }
+       return 31;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -169,6 +184,14 @@ public class Product {
 
     public void setImage(ProductImage image) {
         this.image = image;
+    }
+
+    public Catalog getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
     }
 //
 //    public ProductId getProductId() {

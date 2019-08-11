@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="fragments.html::headerfiles">
+<head th:replace="fragments.html::headerfiles(~{::title},~{::link})">
     <title>Catalog Manager</title>
-
+    <link>
 </head>
 <body>
     <div th:insert="fragments.html::nav">
@@ -24,8 +24,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
-<script src="/webjars/bootstrap/4.3.1/js/bootstrap.js" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
+    <th:block th:replace="fragments.html :: scripts(~{::script})">
+        <script></script>
+    </th:block>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 </body>
 </html>

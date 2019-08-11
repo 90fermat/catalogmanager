@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments.html::headerfiles">
+<head th:replace="fragments.html::headerfiles(~{::title},~{::link})">
     <title>Log in</title>
+    <link>
 </head>
 <body>
     <div th:insert="fragments.html::nav"></div>
@@ -57,14 +58,8 @@
             </div>
         </div>
     </div>
-    <script th:inline="javascript" >
-        var myUsername = document.getElementById("username");
-        var myPossword = document.getElementById("password");
-        var errorValue = /*[[(${error})]]*/ false;
-        if (errorValue) {
-            myUsername.classList.add('is-invalid');
-            myPossword.classList.add('is-invalid');
-        }
-    </script>
+    <th:block th:replace="fragments.html :: scripts(~{::script})">
+        <script th:inline="javascript" th:src="@{/js/login.js}"></script>
+    </th:block>
 </body>
 </html>

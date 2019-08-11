@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments.html::headerfiles">
-    <title>Log in</title>
+<head th:replace="fragments.html::headerfiles(~{::title},~{::link})">
+    <title>User</title>
+    <link>
 </head>
 <body>
     <div th:insert="fragments.html::nav"></div>
@@ -78,5 +79,8 @@
             </div>
         </div>
     </div>
+    <th:block th:replace="fragments.html :: scripts(~{::script})">
+        <script></script>
+    </th:block>
 </body>
 </html>
