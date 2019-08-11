@@ -35,7 +35,7 @@
                     <a class="nav-link" href="#" th:href="@{/products/create}">Create Product</a>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/users/create}">Add User</a>
+                    <a class="nav-link" href="#" th:href="@{/user/create}">Add User</a>
                 </li>
 
             </ul>
@@ -48,15 +48,15 @@
                     <span class="caret"><span th:text="${#authentication.principal.lastname}"></span> <span th:text="${#authentication.principal.firstname}"></span></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <a class="dropdown-item" href="/user_profil" ><i class="fas fa-address-card"></i> Profil</a>
-                    <a class="dropdown-item" href="/user_edit"><i class="fas fa-user-edit"></i> Edit</a>
+                    <a class="dropdown-item" href="/user/profile" ><i class="fas fa-address-card"></i> Profil</a>
+                    <a class="dropdown-item" href="/user/edit"><i class="fas fa-user-edit"></i> Edit</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/logout"  ><i class="fas fa-power-off" style="color:red"></i> Logout</a>
                 </div>
             </div>
-            <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/home}">
-                <button sec:authorize="isAnonymous()" href="#" th:href="@{/home}" class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
-            </form>
+            <div class="form-inline my-2 my-lg-0" sec:authorize="isAnonymous()">
+                <button th:href="@{/home}" class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">Login <i class="fas fa-sign-in-alt"></i></button>
+            </div>
         </div>
     </nav>
 </div>

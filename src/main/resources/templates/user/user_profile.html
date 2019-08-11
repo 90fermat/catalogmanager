@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html::headerfiles">
+    <title>Log in</title>
+</head>
+<body>
+<div th:insert="fragments.html::nav"></div>
+<div class="container ">
+    <div style="width:400px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+        <div class="card border-primary">
+            <div class="card-header text-center">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="card-block" style="padding: 24px;">
+                <form name="f" action="#" th:action="@{/users/create}" th:object="${user}" method="post">
+                    <fieldset>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Firstname</span>
+                                </div>
+                                <input type="text" class="form-control" th:field="*{firstname}" id="firstname">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >Lastname</span>
+                                </div>
+                                <input type="text" class="form-control" th:field="*{lastname}" id="lastname">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" required >Username</span>
+                                </div>
+                                <input type="text" class="form-control" th:field="*{username}" id="username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" required >Password</span>
+                                </div>
+                                <input type="password" class="form-control" th:field="*{password}" id="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Role</label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect01">
+                                    <option value="ROLE_USER" selected>USER</option>
+                                    <option value="ROLE_ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div class="form-actions float-right" style="margin-top: 12px;">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
