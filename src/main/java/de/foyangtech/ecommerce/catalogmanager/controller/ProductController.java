@@ -2,10 +2,10 @@ package de.foyangtech.ecommerce.catalogmanager.controller;
 
 import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductIdMismatchException;
 import de.foyangtech.ecommerce.catalogmanager.error.exception.ProductNotFoundException;
+import de.foyangtech.ecommerce.catalogmanager.persistance.dao.CatalogDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ImageDao;
 import de.foyangtech.ecommerce.catalogmanager.persistance.dao.ProductDao;
-import de.foyangtech.ecommerce.catalogmanager.persistance.model.Product;
-import de.foyangtech.ecommerce.catalogmanager.persistance.model.ProductImage;
+import de.foyangtech.ecommerce.catalogmanager.persistance.model.*;
 import de.foyangtech.ecommerce.catalogmanager.service.ProductService;
 import de.foyangtech.ecommerce.catalogmanager.service.ViewType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +32,12 @@ public class ProductController {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private CatalogDao catalogDao;
+
+    @Autowired
+    private Catalog catalog;
 
     @Autowired
     private Product product;
@@ -43,6 +51,11 @@ public class ProductController {
     private Enum viewType = ViewType.LIST;
 
     private List<ProductImage> photos;
+
+    private List<Product> products = new ArrayList<>();
+   private  List<Catalog> catalogs = new ArrayList<>();
+
+
 
 /*    *//**
      * return all products
@@ -64,13 +77,19 @@ public class ProductController {
         return "listProducts";
     }*/
 
+
+    /**
+     * return all products
+     */
     @GetMapping
     public String allProducts(@RequestParam(value = "view", required = false) String view, Model model) {
 
-        List<Product> products = productDao.findAll();
+        products = productDao.findAll();
+        catalogs = catalogDao.findAll();
 
+        model.addAttribute("catalogs", catalogs);
         model.addAttribute("products", products);
-
+        model.addAttribute("categories", Category.values());
         if(view == null || view.equals("list")){
             viewType = ViewType.LIST;
         } else {
@@ -127,7 +146,7 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @ModelAttribute Product product,
+    public String createProduct(@Valid @ModelAttribute Product product,
                          BindingResult bindingResult, Model model) {
 
         //Image construct
@@ -146,9 +165,6 @@ public class ProductController {
             return "create_product";
         }
 
-
-
-
         if (bindingResult.hasErrors()) {
             return "create_product";
         }
@@ -159,11 +175,35 @@ public class ProductController {
             return "create_product";
         }
          model.addAttribute("productAdded", product);
-         model.addAttribute("created", true);
+         model.addAttribute("createdPR", true);
 
         return "create_product";
 
     }
+
+    @PostMapping(value = "/create/catalog")
+    @ResponseStatus(HttpStatus.CREATED)
+    public @ResponseBody String createCatalog(@RequestBody CodeList codes,
+                                             BindingResult bindingResult, Model model) {
+        Catalog catalog = new Catalog();
+        if (bindingResult.hasErrors()) {
+            return "/products/create?creation=catalog";
+        }
+        if (codes == null || codes.getCodes().isEmpty()) {
+           /* catalog.setTitle(codes.getTitle());
+            catalogDao.save(catalog);*/
+           return "/products/create?creation=catalog";
+        }
+        codes.getCodes().stream()
+                .forEach(code -> catalog.addProduct(productDao.findByCode(code)));
+        catalog.setTitle(codes.getTitle());
+        catalogDao.save(catalog);
+        model.addAttribute("createdCA", true);
+
+        return "/products/create?creation=catalog";
+
+    }
+
     private String getExtension(String fileName) {
         String[] strings = fileName.split("\\.");
         String extension = strings[1];
@@ -178,7 +218,7 @@ public class ProductController {
     }
 
     @PutMapping("ids/{id}")
-    public Product updateBook(@RequestBody Product product, @PathVariable Long id) {
+    public Product updateProduct(@RequestBody Product product, @PathVariable Long id) {
         if (product.getId() != id) {
             throw new ProductIdMismatchException();
         }
@@ -192,15 +232,43 @@ public class ProductController {
         return productDao.findByNameLike("%" + nameLike + "%");
     }
 
+    @GetMapping("categories/{category}")
+    public List<Product> filterByCategory(@PathVariable String category) {
+        return productDao.findByCategory(category);
+    }
+
     @GetMapping("price/{limitPrice}")
     public List<Product> limitPrice(@PathVariable int limitPrice) {
         return productDao.findByBuyingPriceGreaterThan(limitPrice);
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model,
+                                 @RequestParam(value = "creation", required = false)
+                                         String creation) {
 
+        if (creation == null) { creation = "product"; }
 
+        products = productDao.findAll();
+        List<String> catalogsTitle = catalogDao.findAllTile();
+
+        List<String> productDescription = new ArrayList<>();
+        for(Product product: products) {
+            productDescription.add(product.toString());
+        }
+
+        List<String> productsName = productDao.findAllName();
+        List<String> productsCode = productDao.findAllCode();
+        List<String> prodToAdd = new ArrayList<>();
+
+        model.addAttribute("productsCode", productsCode);
+        model.addAttribute("prodToAdd", prodToAdd);
+        model.addAttribute("catalogsTitle", catalogsTitle);
+        model.addAttribute("productsName", productsName);
+        model.addAttribute("productDescription", productDescription);
+
+        model.addAttribute("creation", creation);
+        model.addAttribute("catalog", catalog);
         model.addAttribute("product", product);
         model.addAttribute("created", false);
         return "create_product";

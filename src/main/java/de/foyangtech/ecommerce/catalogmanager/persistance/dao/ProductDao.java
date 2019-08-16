@@ -18,6 +18,14 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 
     Product findByName(String name);
 
+    Product findByCode(String Code);
+
+    @Query(value = "SELECT name FROM Products p ", nativeQuery = true)
+    List<String> findAllName();
+
+    @Query(value = "SELECT code FROM Products p ", nativeQuery = true)
+    List<String> findAllCode();
+
     List<Product> findByBuyingPriceGreaterThan(int limitPrice);
 
     List<Product> findByNameLike(String search);
@@ -26,6 +34,12 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT image_id FROM Products p WHERE p.id = :id", nativeQuery = true )
     String findPhotoById(@Param("id") Integer id);
+
+    List<Product> findByCategory(String category);
+
+    List<Product> findByTimestampIsBefore(Date date);
+
+    List<Product> findByTimestampIsAfter(Date date);
 
 
 }

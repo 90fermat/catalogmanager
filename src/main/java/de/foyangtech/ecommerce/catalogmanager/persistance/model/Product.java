@@ -1,5 +1,6 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -10,7 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -32,9 +35,9 @@ public class Product {
     @Column(unique = true)
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalog_id", referencedColumnName = "id")
-    private Catalog catalog;
+    @ManyToMany(mappedBy = "products")
+    @JsonBackReference
+    private Set<Catalog> catalogs = new HashSet<>();
 
     @Min(1)
     private double sellingPrice;
@@ -186,13 +189,11 @@ public class Product {
         this.image = image;
     }
 
-    public Catalog getCatalog() {
-        return catalog;
+    public Set<Catalog> getCatalogs() {
+        return catalogs;
     }
 
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
-    }
+
 //
 //    public ProductId getProductId() {
 //        return productId;
@@ -205,7 +206,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product { " +
+        String toString = "Product { " +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
@@ -213,9 +214,11 @@ public class Product {
                 ", buying Price=" + buyingPrice +
                 ", supplier Name='" + supplierName + '\'' +
                 ", supplier Url='" + supplierUrl + '\'' +
-                ", image Name=" + image.getFileName() +
                 ", category='" + category + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+                ", timestamp=" + timestamp ;
+        if (image != null) {
+            return toString +  ", image Name=" + image.getFileName() +  '}';
+        }
+        return toString +  '}';
     }
 }

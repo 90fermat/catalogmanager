@@ -3,6 +3,8 @@
 <head th:replace="fragments.html::headerfiles(~{::title},~{::link})">
     <title>Create Product</title>
     <link>
+
+
 </head>
 <body>
     <div th:insert="fragments.html::nav"></div>
@@ -17,11 +19,14 @@
         <h4 class="alert-heading">Internal Error!</h4>
         <p>Some error append ..Please try again</p>
     </div>
-    <div th:if="${created}" class="alert alert-success" role="alert">
+    <div th:if="${createdPR}" class="alert alert-success" role="alert">
         <h4 class="alert-heading">Succesfull created Product done!</h4>
         <p th:text="${product.toString()}"></p>
     </div>
-
+    <div th:if="${createdCA}" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Succesfull created Catalog done!</h4>
+        <p th:text="${catalog.toString()}"></p>
+    </div>
     <div class="card  mx-auto my-2 mx-2 border-primary col-lg-8"  >
         <div class="row no-gutters">
             <div class="col-md-4">
@@ -31,7 +36,7 @@
                 <div class="card-header bg-transparent">
                     <ul class="nav nav-pills card-header-pills" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="true">Product</a>
+                            <a class="nav-link " id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="true">Product</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="catalog-tab" data-toggle="tab" href="#catalog" role="tab" aria-controls="catalog" aria-selected="false ">Catalog</a>
@@ -43,7 +48,7 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active"id="product" role="tabpanel" aria-labelledby="product-tab">
+                        <div class="tab-pane fade "id="product" role="tabpanel" aria-labelledby="product-tab">
                             <form action="#" th:action="@{/products/create}" th:object="${product}"  enctype="multipart/form-data" method="post">
                                 <fieldset class="card-body text-info">
                                     <legend class="card-title text-center">Create Product</legend>
@@ -108,7 +113,7 @@
                                             <div class="alert alert-danger" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}">
                                             </div>
                                             <input type="file" name="file" required th:field = "*{multipartFile}"
-                                                   onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                                   onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -119,77 +124,44 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="catalog" role="tabpanel" aria-labelledby="catalog-tab">
-                            <form action="#" th:action="@{/products/create/catalog}" th:object="${product}"  enctype="multipart/form-data" method="post">
+                            <form >
                                 <fieldset class="card-body text-info">
                                     <legend class="card-title text-center">Create Catalog</legend>
                                     <div class="">
                                         <div  class="input-group form-group" style="border-radius:1rem; height:50px;font-size:14pt">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" >@Code</span>
+                                                <span class="input-group-text" >@Title</span>
                                             </div>
-                                            <input class="col-md-8"  type="text" id="pcod" required placeholder="code" th:field="*{code}"/>
-                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></div>
+                                            <input class="col-md-8"  type="text" id="title" required placeholder="title" />
+                                          <!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>-->
                                         </div>
 
-                                        <div class="input-group form-group" style="height:50px;font-size:14pt">
-                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                                            </div>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" >Name</span>
-                                            </div>
-                                            <input class="col-md-8" type="text" id="pnam" required placeholder="name" th:field="*{name}"/>
-                                        </div>
-                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
-                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierName')}" th:errors="*{supplierName}">
-                                            </div>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" >@SupplierName</span>
-                                            </div>
-                                            <input class="col-md-8" type="text" id="supplierNam" placeholder="supplier name" th:field= "*{supplierName}"/>
-                                        </div>
-                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
-                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('supplierUrl')}" th:errors="*{supplierUrl}">
-                                            </div>
-                                            <div class="input-group-prepend" style="height:50px;font-size:14pt">
-                                                <span class="input-group-text" >@SupplierUrl</span>
-                                            </div>
-                                            <input class="col-md-8" type="url" id="supplierUr" placeholder="supplier Url" th:field="*{supplierUrl}"/>
-                                        </div>
                                         <div class="row form-group">
-                                            <div class="col-md-7">
-                                                <div class="input-group form-group" style="height:50px;font-size:14pt">
-                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('buyingPrice')}" th:errors="*{buyingPrice}">
-                                                    </div>
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" >@buyingPrice</span>
-                                                    </div>
-                                                    <input type="text" id="buyingPric" placeholder="buying price" th:field="*{buyingPrice}"/>
-                                                </div>
-                                                <div  class="input-group form-group" style="height:50px;font-size:14pt">
-                                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}">
-                                                    </div>
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" >@SellingPrice</span>
-                                                    </div>
-                                                    <input type="text" id="sellingPric" placeholder="selling Price" th:field = "*{sellingPrice}"/>
-                                                </div>
-                                            </div>
                                             <div class="col-md-5">
-                                                <img src="..." id="previe" alt="..." class="img-thumbnail" width="100" height="100"><br>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-secondary">Add Products</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="sr-only">Add Products</span>
+                                                    </button>
+                                                    <div id="dropdown-content" class="dropdown-menu">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <ul id="list-adding-product" class="list-group">
+
+                                                </ul>
                                             </div>
                                         </div>
-                                        <label >Image</label>
-                                        <div  class="input-group form-group" style="height:50px;font-size:14pt">
-                                            <div class="alert alert-danger" th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}">
-                                            </div>
-                                            <input type="file" name="file" required th:field = "*{multipartFile}"
-                                                   onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                        </div>
+
                                     </div>
                                 </fieldset>
                                 <div class="card-footer text-center">
-                                    <input class="btn btn-success " style="width: 150px;margin-right: 30px" type="submit" id="submitButto" th:value="Save">
-                                    <input class="btn  btn-danger" style="width: 150px" type="reset" id="resetButto" name="reset" th:value="Reset"/>
+                                    <input class="btn btn-success " style="width: 150px;margin-right: 30px" type="submit" id="subButton" th:value="Save"
+                                    onclick="createCatalog()"/>
+                                    <input class="btn  btn-danger" style="width: 150px" type="reset" id="reButton" name="reset" th:value="Reset"
+                                    onclick="deleteList()"/>
                                 </div> 
                             </form>
                         </div>
@@ -207,8 +179,101 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+
     <th:block th:replace="fragments.html :: scripts(~{::script})">
-        <script></script>
+        <script type="text/javascript" th:inline="javascript" >
+
+                const creation = /*[[${creation}]]*/ "product";
+                switch (creation) {
+                    case "catalog":
+                        $('#catalog').addClass("show active");
+                        $('#catalog-tab').addClass('active');
+                        break;
+                    case "product":
+                        $('#product').addClass("show active");
+                        $('#product-tab').addClass('active');
+                        break;
+                }
+
+        </script>
+        <script type="text/javascript" th:inline="javascript" >
+                var list = /*[[${productsName}]]*/ null;
+                var toString = /*[[${productDescription}]]*/ null;
+                var codes = /*[[${productsCode}]]*/ null;
+                var toAdd = /*[[${prodToAdd}]]*/ null;
+                console.log(list[0]);
+                if (list != null) {
+                    for (i = 0; i < list.length; i++) {
+                        const a = document.createElement("a");
+                        a.classList.add('product-drop');
+                        a.classList.add('dropdown-item');
+                       // a.setAttribute("href", "#");
+                        const p1 = document.createElement("p");
+                        p1.innerHTML = list[i];
+                        const s1 = document.createElement("small");
+                        s1.innerHTML = toString[i];
+                        s1.style.display = 'none';
+                        const s2 = document.createElement("small");
+                        s2.innerHTML = codes[i];
+                        s2.style.display = 'none';
+                        a.appendChild(p1);
+                        a.appendChild(s1);
+                        a.appendChild(s2);
+                        document.getElementById('dropdown-content').appendChild(a);
+                        a.onclick = function () {
+                            const li = document.createElement("li");
+                            const h5 = document.createElement("h5");
+                            const small = document.createElement("small");
+                            h5.innerHTML = a.getElementsByTagName('p')[0].innerHTML;
+                            small.innerHTML = a.getElementsByTagName('small')[0].innerHTML;
+                            const code = a.getElementsByTagName('small')[1].innerHTML;
+                            toAdd.push(code);
+                            li.classList.add('list-group-item');
+                            li.appendChild(h5);
+                            li.appendChild(small);
+                           document.getElementById('list-adding-product').appendChild(li)
+                        };
+                    }
+                }
+                function createCatalog() {
+                    const title = document.getElementById("title").value;
+                    debugger;
+                    toAdd = JSON.stringify({"title": title,'codes': toAdd});
+                    if(title.length < 3 || title.length > 20) {
+                        alert("The Title may have more than 3 and no more than 20 characters");
+                        submitOK = "false";
+                    }
+                    $.ajax({
+                        url:"/products/create/catalog/",
+                        type: 'POST',
+                        data:  toAdd,
+                        dataType: 'html',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        mimeType: 'application/json',
+                        success: function(data){
+                            console.log(data);
+                            console.log("Succesfully post")
+                        },
+                        error: function(jqXhr, textStatus, errorThrown){
+                            console.log(errorThrown);
+                        }
+                    })
+
+                }
+                function deleteList() {
+                   const e = document.getElementById('list-adding-product');
+
+                    //e.firstElementChild can be used.
+                    var child = e.lastElementChild;
+                    while (child) {
+                        child.remove();
+                        child = e.lastElementChild;
+                    }
+                }
+        </script>
     </th:block>
 </body>
 </html>

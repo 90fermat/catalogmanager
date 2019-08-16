@@ -1,10 +1,13 @@
 package de.foyangtech.ecommerce.catalogmanager.persistance.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "catalog")
+@Component
 @Table(name = "catalogs")
 public class Catalog {
 
@@ -14,10 +17,16 @@ public class Catalog {
 
     private String title;
 
-    @OneToMany(mappedBy = "catalog",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "catalog_product",
+            joinColumns = @JoinColumn(name = "catalog_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    @JsonManagedReference
+    private Set<Product> products = new HashSet<>();
 
     public Catalog() {}
 
@@ -25,13 +34,60 @@ public class Catalog {
         this.title = title;
     }
 
-    public void addComment(Product product) {
+    public void addProduct(Product product) {
         products.add(product);
-        product.setCatalog(this);
+        product.getCatalogs().add(this);
     }
 
-    public void removeComment(Product product) {
+    public void removeProduct(Product product) {
         products.remove(product);
-        product.setCatalog(null);
+        product.getCatalogs().remove(this);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Catalog tag = (Catalog) o;
+        return Objects.equals(title, tag.title);
+    }
+
+    @Override
+    public int hashCode() {
+        if(title != null)
+            return Objects.hash(title);
+
+        return 31;
+    }
+
+    @Override
+    public String toString() {
+       String partOne = "Catalog { " +
+                            "id=" + id +
+                             ", title='" + title + '\'' ;
+
+       if (!products.isEmpty()) {
+           String lastPart = "Products [ ";
+           for(Product product : products) {
+               lastPart = lastPart + '\n' + product.toString() + '\n';
+           }
+           lastPart = lastPart + "]";
+
+           return partOne + lastPart;
+       }
+       return partOne + "}";
+
     }
 }
